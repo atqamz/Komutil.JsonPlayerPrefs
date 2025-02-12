@@ -1,0 +1,9 @@
+{
+    "name": "com.atqamz.komutil-json-player-prefs",
+    "displayName": "Komutil Json Player Prefs",
+    "version": "1.0.0",
+    "unity": "2022.1",
+    "author": "atqamz",
+    "description": "",
+    "dependencies": {}
+}
