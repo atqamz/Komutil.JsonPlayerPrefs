@@ -1,7 +1,7 @@
 ﻿// ==================================================
-// 
+//
 //   Created by Atqa Munzir
-// 
+//
 // ==================================================
 using System;
 using System.Collections.Generic;
@@ -14,9 +14,10 @@ namespace Komutil.JsonPlayerPrefs
 	/// <summary>
 	///     A replacement for Unity's PlayerPrefs that stores data in a JSON file.
 	/// </summary>
+	[Serializable]
 	internal class JsonPlayerPrefsImpl
 	{
-		private List<PlayerPref> playerPrefs = new List<PlayerPref>();
+		[SerializeField] private List<PlayerPref> playerPrefs = new List<PlayerPref>();
 		private string encryptSalt;
 		private string savePath;
 
