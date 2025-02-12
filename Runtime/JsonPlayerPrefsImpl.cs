@@ -52,7 +52,7 @@ namespace Komutil.JsonPlayerPrefs
 		{
 			for (int i = playerPrefs.Count - 1; i >= 0; i--)
 			{
-				if (playerPrefs[i].Key == key)
+				if (playerPrefs[i].key == key)
 				{
 					playerPrefs.RemoveAt(i);
 				}
@@ -64,17 +64,15 @@ namespace Komutil.JsonPlayerPrefs
 		/// </summary>
 		public float GetFloat(string key, float defaultValue = 0f)
 		{
-			if (TryGetPlayerPref(key, out var playerPref))
+			PlayerPref playerPref;
+			if (TryGetPlayerPref(key, out playerPref))
 			{
-				if (float.TryParse(playerPref.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var value))
+				float value;
+				if (float.TryParse(playerPref.value, NumberStyles.Any, CultureInfo.InvariantCulture, out value))
 				{
-					return playerPref.Encrypt
-						? float.Parse(AescbcEncryption.Decrypt(playerPref.Value, encryptSalt), NumberStyles.Any,
-							CultureInfo.InvariantCulture)
-						: value;
+					return playerPref.encrypt ? float.Parse(AescbcEncryption.Decrypt(playerPref.value, encryptSalt), NumberStyles.Any, CultureInfo.InvariantCulture) : value;
 				}
 			}
-
 			return defaultValue;
 		}
 
@@ -83,16 +81,15 @@ namespace Komutil.JsonPlayerPrefs
 		/// </summary>
 		public int GetInt(string key, int defaultValue = 0)
 		{
-			if (TryGetPlayerPref(key, out var playerPref))
+			PlayerPref playerPref;
+			if (TryGetPlayerPref(key, out playerPref))
 			{
-				if (int.TryParse(playerPref.Value, out var value))
+				int value;
+				if (int.TryParse(playerPref.value, out value))
 				{
-					return playerPref.Encrypt
-						? int.Parse(AescbcEncryption.Decrypt(playerPref.Value, encryptSalt))
-						: value;
+					return playerPref.encrypt ? int.Parse(AescbcEncryption.Decrypt(playerPref.value, encryptSalt)) : value;
 				}
 			}
-
 			return defaultValue;
 		}
 
@@ -101,11 +98,11 @@ namespace Komutil.JsonPlayerPrefs
 		/// </summary>
 		public string GetString(string key, string defaultValue = "")
 		{
-			if (TryGetPlayerPref(key, out var playerPref))
+			PlayerPref playerPref;
+			if (TryGetPlayerPref(key, out playerPref))
 			{
-				return playerPref.Encrypt ? AescbcEncryption.Decrypt(playerPref.Value, encryptSalt) : playerPref.Value;
+				return playerPref.encrypt ? AescbcEncryption.Decrypt(playerPref.value, encryptSalt) : playerPref.value;
 			}
-
 			return defaultValue;
 		}
 
@@ -116,12 +113,11 @@ namespace Komutil.JsonPlayerPrefs
 		{
 			for (int i = 0; i < playerPrefs.Count; i++)
 			{
-				if (playerPrefs[i].Key == key)
+				if (playerPrefs[i].key == key)
 				{
 					return true;
 				}
 			}
-
 			return false;
 		}
 
@@ -133,7 +129,6 @@ namespace Komutil.JsonPlayerPrefs
 			// create directory if it doesn't already exist
 			string directory = Path.GetDirectoryName(savePath);
 			Directory.CreateDirectory(directory);
-			
 			// serialize and save file
 			string json = JsonUtility.ToJson(this);
 			using (StreamWriter writer = new StreamWriter(savePath))
@@ -168,8 +163,8 @@ namespace Komutil.JsonPlayerPrefs
 
 			if (TryGetPlayerPref(key, out playerPref))
 			{
-				playerPref.Value = value;
-				playerPref.Encrypt = encrypt;
+				playerPref.value = value;
+				playerPref.encrypt = encrypt;
 			}
 			else
 			{
@@ -182,7 +177,7 @@ namespace Komutil.JsonPlayerPrefs
 			playerPref = null;
 			for (int i = 0; i < playerPrefs.Count; i++)
 			{
-				if (playerPrefs[i].Key == key)
+				if (playerPrefs[i].key == key)
 				{
 					playerPref = playerPrefs[i];
 					return true;
@@ -191,18 +186,19 @@ namespace Komutil.JsonPlayerPrefs
 			return false;
 		}
 
+
 		[Serializable]
 		private class PlayerPref
 		{
-			public string Key;
-			public string Value;
-			public bool Encrypt;
+			public string key;
+			public string value;
+			public bool encrypt;
 
 			public PlayerPref(string key, string value, bool encrypt = false)
 			{
-				Key = key;
-				Value = value;
-				Encrypt = encrypt;
+				this.key = key;
+				this.value = value;
+				this.encrypt = encrypt;
 			}
 		}
 	}
