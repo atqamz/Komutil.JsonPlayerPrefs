@@ -17,7 +17,7 @@ namespace Komutil.JsonPlayerPrefs
 	[Serializable]
 	internal class JsonPlayerPrefsImpl
 	{
-		[SerializeField] private List<PlayerPref> playerPrefs = new List<PlayerPref>();
+		private List<PlayerPref> playerPrefs = new List<PlayerPref>();
 		private string encryptSalt;
 		private string savePath;
 
