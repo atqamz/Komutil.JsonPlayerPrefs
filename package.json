@@ -1,11 +1,11 @@
 {
-    "name": "com.atqamz.komutil-json-player-prefs",
-    "version": "1.0.1",
-    "displayName": "Komutil - JSON Player Prefs",
-    "description": "Lorem ipsum dolor sit amet",
-    "unity": "6000.0",
-    "author": {
-        "name": "Atqa Munzir",
-        "email": "atqamz@gmail.com"
-    }
+  "name": "com.atqamz.komutil-json-player-prefs",
+  "version": "1.0.1",
+  "displayName": "Komutil - JSON Player Prefs",
+  "description": "Lorem ipsum dolor sit amet",
+  "unity": "6000.0",
+  "author": {
+    "name": "Atqa Munzir",
+    "email": "atqamz@gmail.com"
+  }
 }
